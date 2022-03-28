@@ -9,6 +9,17 @@ const Command = require("./Command");
 const Color = require("./Color");
 
 /**
+ * @param client {Kideo}
+ * @param activity {string}
+ */
+function setActivities(client, activity){
+    client.user.setActivity({
+        type: "PLAYING",
+        name: activity
+    })
+}
+
+/**
  * @description This class allows you managing Kideo Bot
  * @return { Kideo }
  */
@@ -32,6 +43,13 @@ class Kideo extends Client {
 
     start(){
 
+        const activties = [
+            "make pasta",
+            "manage your server",
+            "do his homework",
+            "Tetris Premium"
+        ]
+
         let embed = undefined;
 
         fs.readdirSync("./commands").filter(file => file.endsWith(".js")).forEach(file => {
@@ -50,6 +68,23 @@ class Kideo extends Client {
         })
 
         this.on("ready", () => {
+
+            let number = Math.floor(Math.random() * activties.length);
+
+            setActivities(this, activties[number]);
+
+            setInterval(() => {
+
+                const old = number;
+
+                while (old === number){
+                    number = Math.floor(Math.random() * activties.length);
+                }
+
+                setActivities(this, activties[number]);
+
+            }, 1000 * 60 * 5);
+
             console.log("Kideo is ready !");
         });
 

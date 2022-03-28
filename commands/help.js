@@ -10,7 +10,7 @@ module.exports = new Command((message, args, client) => {
         embedMessage += `**${client.config.prefix}${command.name}**: ${command.description}\n\n`;
     });
 
-    const embed = new MessageEmbed().setTitle("**Help**").setDescription(embedMessage).setColor(client.color.TRANSPARENT).setFooter({text: "All rigths reserved Kideo - 2022 ©", iconURL: "https://www.usine-digitale.fr/mediatheque/5/0/0/000305005_homePageUne/logo-google-g.jpg"});
+    const embed = new MessageEmbed().setTitle("**Help**").setDescription(embedMessage).setColor(client.color.TRANSPARENT).setFooter({text: "Kideo - 2022", iconURL: "https://www.usine-digitale.fr/mediatheque/5/0/0/000305005_homePageUne/logo-google-g.jpg"});
 
     message.reply({embeds: [embed]});
 

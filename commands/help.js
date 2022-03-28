@@ -14,4 +14,4 @@ module.exports = new Command((message, args, client) => {
 
     message.reply({embeds: [embed]});
 
-}, ["all"], "C'est la commande d'aide !");
+}, ["all"], "This command will give you the list of all registered commands!");

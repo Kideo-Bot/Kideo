@@ -41,11 +41,11 @@ class Kideo extends Client {
 
             this.command.set(name, command);
 
-            console.log(`La commande ${name} a bien été chargé !`);
+            console.log(`The command ${name} has been loaded successfuly!`);
         })
 
         this.on("ready", () => {
-            console.log("Kideo is ready !");
+            console.log("Kideo is ready!");
         });
 
         this.on("messageCreate", message => {

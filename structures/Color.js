@@ -1,0 +1,1 @@
+module.exports.RED = "#EE4009";

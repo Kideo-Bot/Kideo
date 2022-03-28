@@ -6,8 +6,12 @@ const fs = require("fs");
 
 const Command = require("./Command");
 
-const { RED } = require("./Color");
+const Color = require("./Color");
 
+/**
+ * @description This class allows you managing Kideo Bot
+ * @return { Kideo }
+ */
 class Kideo extends Client {
     constructor() {
         const ints = new Intents().add(["GUILDS", "GUILD_MESSAGES", "GUILD_MEMBERS", "GUILD_MESSAGE_REACTIONS"]);
@@ -18,8 +22,9 @@ class Kideo extends Client {
 
         this.config = config;
 
+        this.color = Color;
+
         /**
-         *
          * @type {Map<string, Command>}
          */
         this.command = new Map();
@@ -59,7 +64,7 @@ class Kideo extends Client {
             const command = this.command.get(args[0]);
 
             if(!command){
-                embed = new MessageEmbed().setTitle("**Wrong command**").setDescription(`The command **${config.prefix}${args[0]}** doesn't exist !`).setColor(RED);
+                embed = new MessageEmbed().setTitle("**Wrong command**").setDescription(`The command **${config.prefix}${args[0]}** doesn't exist !`).setColor(Color.RED);
                 message.reply({embeds: [embed]});
                 return;
             }

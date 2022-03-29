@@ -2,6 +2,10 @@ const { Intents, Client, MessageEmbed} = require("discord.js");
 
 const config = require("../config.json");
 
+const KideoAPI = require("./KideoAPI");
+
+const api = new KideoAPI();
+
 const fs = require("fs");
 
 const Command = require("./Command");
@@ -67,7 +71,7 @@ class Kideo extends Client {
             console.log(`La commande ${name} a bien été chargé !`);
         })
 
-        this.on("ready", () => {
+        this.on("ready", async () => {
 
             let number = Math.floor(Math.random() * activties.length);
 
@@ -84,6 +88,12 @@ class Kideo extends Client {
                 setActivities(this, activties[number]);
 
             }, 1000 * 60 * 5);
+
+            if(await api.clearGuildWithID({ServerID: "test"})){
+                console.log(`Data has been sent`);
+            }else {
+                console.log(`An error has current`)
+            }
 
             console.log("Kideo is ready !");
         });
@@ -127,6 +137,25 @@ class Kideo extends Client {
             command.run(message, args, this);
 
         });
+
+        this.on("guildCreate", async guild => {
+            const channel = await guild.channels.cache.find(channel => channel.type === "GUILD_TEXT");
+            const chan = await guild.channels.fetch(channel.id);
+            if(await api.createGuildSQL({ServerID: guild.id, XP: 1})){
+                console.log(`Data has been sent`);
+            }else {
+                console.log(`An error has current`)
+            }
+        })
+
+        this.on("guildDelete", async guild => {
+            console.log(guild.name);
+            if(await api.clearGuildWithID({ServerID: guild.id})){
+                console.log(`Data has been sent`);
+            }else {
+                console.log(`An error has current`)
+            }
+        })
 
         this.login(config.token);
     }

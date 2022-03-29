@@ -37,6 +37,10 @@ class Kideo extends Client {
 
         this.config = config;
 
+        this.prefix = undefined;
+
+        this.KideoApi = api;
+
         this.color = Color;
 
         /**
@@ -89,27 +93,42 @@ class Kideo extends Client {
 
             }, 1000 * 60 * 5);
 
-            if(await api.clearGuildWithID({ServerID: "test"})){
-                console.log(`Data has been sent`);
-            }else {
-                console.log(`An error has current`)
-            }
-
             console.log("Kideo is ready !");
         });
 
-        this.on("messageCreate", message => {
+        this.on("messageCreate", async message => {
+
+            let guild = await api.getDataWithID(message.guild.id);
+
+            if(guild.message[0] === undefined){
+                if(await api.createGuildSQL({ServerID: message.guild.id, XP: 1})){
+                    console.log("Guild created");
+
+                    const guild = await api.getDataWithID(message.guild.id);
+
+                    this.prefix = guild.message[0].PREFIX;
+
+                }else {
+                    console.log("Error in the creation of the guild");
+                    return;
+                }
+            }
+
+            if(this.prefix === undefined){
+                guild = await api.getDataWithID(message.guild.id);
+                this.prefix = guild.message[0].PREFIX;
+            }
 
             if(message.author.bot) return;
 
-            if(!message.content.startsWith(config.prefix)) return;
+            if(!message.content.startsWith(this.prefix)) return;
 
-            const args = message.content.substring(config.prefix.length).split(/ +/);
+            const args = message.content.substring(this.prefix.length).split(/ +/);
 
             const command = this.command.get(args[0]);
 
             if(!command){
-                embed = new MessageEmbed().setTitle("**Wrong command**").setDescription(`The command **${config.prefix}${args[0]}** doesn't exist !`).setColor(Color.RED);
+                embed = new MessageEmbed().setTitle("**Wrong command**").setDescription(`The command **${this.prefix}${args[0]}** doesn't exist !`).setColor(Color.RED);
                 message.reply({embeds: [embed]});
                 return;
             }

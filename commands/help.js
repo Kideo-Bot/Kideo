@@ -7,7 +7,7 @@ module.exports = new Command((message, args, client) => {
     let embedMessage = "";
 
     client.command.forEach(command => {
-        embedMessage += `**${client.config.prefix}${command.name}**: ${command.description}\n\n`;
+        embedMessage += `**${client.prefix}${command.name}**: ${command.description}\n\n`;
     });
 
     const embed = new MessageEmbed().setTitle("**Help**").setDescription(embedMessage).setColor(client.color.TRANSPARENT).setFooter({text: "Kideo - 2022", iconURL: "https://www.usine-digitale.fr/mediatheque/5/0/0/000305005_homePageUne/logo-google-g.jpg"});

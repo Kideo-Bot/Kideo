@@ -1,5 +1,6 @@
 const http = require("http");
 const https = require("https");
+const config = require("../config.json");
 
 /**
  * @param data
@@ -197,7 +198,6 @@ class KideoAPI {
         } catch (err) {
             console.log(err);
         }
-
     }
 
     async addPointXpGuild(ServerID){
@@ -229,9 +229,11 @@ class KideoAPI {
 
                 const config = require("../config.json");
 
+                const path = "/v1/gifs/search?api_key=" + config.giphyToken + "&q=" + nameGif + "&limit=100&offset=0&rating=g&lang=en"
+
                 const request = https.request({
                     host: "api.giphy.com",
-                    path: "/v1/stickers/search?api_key=" + config.giphyToken + "&q=" + nameGif + "&limit=100&offset=0&rating=g&lang=en",
+                    path: path,
                     port: 443,
                     method: "GET",
                     headers: {"Content-Type": "application/json"}
@@ -256,7 +258,7 @@ class KideoAPI {
                             return;
                         }
 
-                        const number = Math.floor(Math.random() * body.pagination.count);
+                        const number = Math.floor(Math.random() * (body.pagination.count / 2));
 
                         const url = body.data[number].embed_url;
 
@@ -271,6 +273,66 @@ class KideoAPI {
                 request.end();
 
             });
+
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    /**
+     * @param text {string}
+     * @return {Promise<string>}
+     */
+    async talkWithOpenAI(text){
+        try {
+
+            const response = new Promise((resolve, reject) => {
+
+                const request = https.request({host: "api.openai.com", path: "/v1/engines/text-davinci-002/completions", method: "POST", headers: {"Content-Type": "application/json", "Authorization": "Bearer " + config.openAiToken}}, res => {
+
+                    let body = "";
+
+                    res.on("data", chunk => {
+                        body+=chunk;
+                    }).on("end", () => {
+
+                        if(body !== ""){
+                            body = JSON.parse(body);
+                        }
+
+                        if(body.choices[0] !== undefined){
+                            if(body.choices[0].text !== undefined){
+                                if(body.choices[0].text === undefined){
+                                    resolve(undefined)
+                                }else {
+                                    resolve(body.choices[0].text);
+                                }
+                            }
+                        }
+
+                    }).on("error", err => {
+                        reject(new Error(err.message));
+                    })
+
+                });
+
+                const data = {
+                    "prompt": text,
+                    "temperature": 0.7,
+                    "max_tokens": 2000,
+                    "top_p": 1,
+                    "frequency_penalty": 0,
+                    "presence_penalty": 0
+                }
+
+
+                request.write(JSON.stringify(data));
+
+                request.end();
+
+            });
+
+            return response;
 
         } catch (err) {
             console.log(err);

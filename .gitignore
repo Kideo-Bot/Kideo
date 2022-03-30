@@ -108,3 +108,5 @@ dist
 
 # TokenBot and prefix
 config.json
+
+start.bat

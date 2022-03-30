@@ -1,4 +1,4 @@
-const { Intents, Client, MessageEmbed} = require("discord.js");
+const { Intents, Client, MessageEmbed, Message} = require("discord.js");
 
 const config = require("../config.json");
 
@@ -98,9 +98,9 @@ class Kideo extends Client {
 
         this.on("messageCreate", async message => {
 
-            let guild = await api.getDataWithID(message.guild.id);
+            if(message.author.bot) return;
 
-            if(guild.message[0] === undefined){
+            if(await (await api.getDataWithID(message.guild.id)).message[0] === undefined){
                 if(await api.createGuildSQL({ServerID: message.guild.id, XP: 1})){
                     console.log("Guild created");
 
@@ -114,12 +114,18 @@ class Kideo extends Client {
                 }
             }
 
-            if(this.prefix === undefined){
-                guild = await api.getDataWithID(message.guild.id);
-                this.prefix = guild.message[0].PREFIX;
+            const guild = await api.getDataWithID(message.guild.id);
+
+            this.prefix = guild.message[0].PREFIX;
+
+            if(message.content === `<@!${this.user.id}>` || message.content === `<@${this.user.id}>`){
+                return await message.reply({embeds: [new MessageEmbed().setTitle("**Prefix**").setDescription(`Hi !\n\nMy prefix is **${this.prefix}**`).setThumbnail("https://images.assetsdelivery.com/compings_v2/djvstock/djvstock1409/djvstock140901230.jpg")]});
             }
 
-            if(message.author.bot) return;
+            if(!await api.addPointXpGuild(message.guildId)){
+                console.log("Error on Xp Point");
+                return;
+            }
 
             if(!message.content.startsWith(this.prefix)) return;
 
@@ -149,7 +155,7 @@ class Kideo extends Client {
             })
 
             if(!canStart){
-                message.reply();
+                message.reply({embeds: [new MessageEmbed().setTitle("**Missing permissions**").setDescription("You don't have the permissions !").setColor(this.color.RED)]});
                 return;
             }
 

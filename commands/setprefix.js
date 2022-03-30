@@ -22,4 +22,4 @@ module.exports = new Command(async (message, args, client) => {
         message.reply({embeds: [new MessageEmbed().setTitle("**Failure**").setDescription("There is an error in the Kideo API").setColor(client.color.RED)]})
     }
 
-}, ["all"], "Commande d'exemple");
+}, ["all"], "This command will allow you to change the prefix of the bot");

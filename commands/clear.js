@@ -1,11 +1,17 @@
 const Command = require("../structures/Command");
 
-const { Message, MessageEmbed } = require("discord.js");
+const { Message, MessageEmbed, Permissions } = require("discord.js");
 
-module.exports = new Command((message, args, client) => {
+module.exports = new Command(async (message, args, client) => {
+
+    const member = await message.guild.members.fetch(message.author.id);
+
+    if(!member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)){
+        return await message.reply({embeds: [new MessageEmbed().setTitle("**Missing permissions**").setDescription("You must have the permission **MANAGE_MESSAGES**").setColor(client.color.RED)]});
+    }
 
     if(args.length < 2){
-        message.reply({embeds: [new MessageEmbed().setTitle("**Missing permissions**").setDescription("You must add **how many messages** I will delete !").setColor(client.color.RED)]});
+        message.reply({embeds: [new MessageEmbed().setTitle("**Missing arguments**").setDescription("You must add **how many messages** I will delete !").setColor(client.color.RED)]});
         return;
     }
 

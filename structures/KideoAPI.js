@@ -2,6 +2,10 @@ const http = require("http");
 const https = require("https");
 const config = require("../config.json");
 
+const MessageEmbed = require("discord.js").MessageEmbed;
+
+const {returnGenreWithNumber} = require("./NetflixRandomAPI");
+
 /**
  * @param data
  * @param path {string};
@@ -337,6 +341,75 @@ class KideoAPI {
         } catch (err) {
             console.log(err);
         }
+    }
+
+    /**
+     * @return {Promise<string>}
+     */
+    async getNetflixSeriesOrFilmAPI(){
+
+        try {
+
+            const response = new Promise((resolve, reject) => {
+
+                const request = https.request({
+                    host: "api.reelgood.com",
+                    port: 443, path: "/v3.0/content/random/netflix?availability=onAnySource&region=us",
+                    method: "GET",
+                    headers: {"Content-Type": "application/json"}}, res => {
+
+                    let body = "";
+
+                    res.on("data", chunk => {
+                        body+=chunk;
+                    }).on("end",  async () => {
+
+                        if(body !== ""){
+                            body = JSON.parse(body);
+                        }
+
+                        const seriesOrFilm = {
+                            name: body.title,
+                            overview: body.overview,
+                            classification: body.classification,
+                            rating: body.imdb_rating,
+                            id: body.id
+                        }
+
+                        seriesOrFilm.poster = "https://img.reelgood.com/content/movie/" + seriesOrFilm.id + "/poster-342.webp";
+
+                        seriesOrFilm.genres = "";
+
+                        for (let i = 0; i<body.genres.length;i++){
+                            if(i === body.genres.length - 1){
+                                seriesOrFilm.genres += await returnGenreWithNumber(body.genres[i]);
+                            }else {
+                                seriesOrFilm.genres += await returnGenreWithNumber(body.genres[i]) + ", ";
+                            }
+                        }
+
+                        if(seriesOrFilm.name !== undefined && seriesOrFilm.overview !== undefined && seriesOrFilm.classification !== undefined && seriesOrFilm.rating !== null && seriesOrFilm.id !== undefined && seriesOrFilm.genres !== undefined){
+                            resolve(new MessageEmbed().setTitle("**Netflix Roulette**").setDescription("**__" + seriesOrFilm.name + "__**\nGenres: **" + seriesOrFilm.genres + "**\nClassification: **" + seriesOrFilm.classification + "**\nRating: **" + seriesOrFilm.rating.toString() + "/10**\nOverview: **" + seriesOrFilm.overview + "**").setImage(seriesOrFilm.poster).setColor("GREEN"))
+                        }else {
+                            resolve(new MessageEmbed().setTitle("**Netflix Roulette**").setDescription("We don't have enought arguments with the API"));
+                        }
+
+
+                    }).on("error", err => {
+                        reject(new Error(err.message));
+                    })
+
+                })
+
+                request.end();
+            })
+
+            return response;
+
+        } catch (err) {
+            console.log(err);
+        }
+
     }
 
 }

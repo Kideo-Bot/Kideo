@@ -102,7 +102,6 @@ class Kideo extends Client {
 
             if(await (await api.getDataWithID(message.guild.id)).message[0] === undefined){
                 if(await api.createGuildSQL({ServerID: message.guild.id, XP: 1})){
-                    console.log("Guild created");
 
                     const guild = await api.getDataWithID(message.guild.id);
 

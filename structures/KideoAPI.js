@@ -14,7 +14,7 @@ async function sendData(data, path, method){
 
         const response = new Promise((resolve, reject) => {
 
-            const request = http.request({host: "localhost", port: 5000, path: path, headers: {"Content-Type": "application/json"}, method: method}, res => {
+            const request = http.request({host: "0.0.0.0", port: 5000, path: path, headers: {"Content-Type": "application/json"}, method: method}, res => {
 
                 let body = "";
 
@@ -55,12 +55,13 @@ async function sendData(data, path, method){
  * @param method {string};
  * @return {Promise<JSON>}
  */
+
 async function getData(body, path, method){
     try {
 
         const response = new Promise((resolve, reject) => {
 
-            const request = http.request({host: "localhost", port: 5000, path: path, headers: {"Content-Type": "application/json"}, method: method}, res => {
+            const request = http.request({host: "0.0.0.0", port: 5000, path: path, headers: {"Content-Type": "application/json"}, method: method}, res => {
 
                 let body = "";
 
@@ -104,6 +105,24 @@ class KideoAPI {
     }
 
     /**
+     *
+     * @param ServerID {string}
+     * @returns {Promise<number>}
+     */
+    async getLevel(ServerID) {
+        return await (await getData({ServerID: ServerID}, "/api/getLevel", "POST")).message;
+    }
+
+    /**
+     *
+     * @param serverID {string}
+     * @returns {Promise<number>}
+     */
+    async getExperience(ServerID) {
+        return await (await getData({ServerID: ServerID}, "/api/getExperience", "POST")).message;
+    }
+
+    /**
      * @param data {{ServerID: string}}
      * @return {Promise<boolean>};
      */
@@ -119,9 +138,19 @@ class KideoAPI {
         return await getData({ServerID: ID}, "/api/guildID", "POST");
     }
 
+    async isLevelAdded() {
+
+    }
+
     async changePrefixGuildID(newPrefix, guildID){
         return await sendData({ServerID: guildID, Prefix: newPrefix}, "/api/guildPrefix", "POST");
     }
+
+    /**
+     *
+     * @param text: char
+     *
+     * */
 
     /**
      * @return {Promise<string>}

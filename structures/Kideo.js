@@ -144,7 +144,7 @@ class Kideo extends Client {
 
             if(!command){
                 embed = new MessageEmbed().setTitle("**Wrong command**").setDescription(`The command **${this.prefix}${args[0]}** doesn't exist !`).setColor(Color.RED);
-                message.reply({embeds: [embed]});
+                await message.reply({embeds: [embed]});
                 return;
             }
 
@@ -164,7 +164,7 @@ class Kideo extends Client {
             })
 
             if(!canStart){
-                message.reply({embeds: [new MessageEmbed().setTitle("**Missing permissions**").setDescription("You don't have the permissions !").setColor(this.color.RED)]});
+                await message.reply({embeds: [new MessageEmbed().setTitle("**Missing permissions**").setDescription("You don't have the permissions !").setColor(this.color.RED)]});
                 return;
             }
 
@@ -173,20 +173,13 @@ class Kideo extends Client {
         });
 
         this.on("guildCreate", async guild => {
-            const channel = await guild.channels.cache.find(channel => channel.type === "GUILD_TEXT");
-            const chan = await guild.channels.fetch(channel.id);
-            if(await api.createGuildSQL({ServerID: guild.id, XP: 1})){
-                console.log(`Data has been sent`);
-            }else {
+            if(!await api.createGuildSQL({ServerID: guild.id, XP: 1})){
                 console.log(`An error has current`)
             }
         })
 
         this.on("guildDelete", async guild => {
-            console.log(guild.name);
-            if(await api.clearGuildWithID({ServerID: guild.id})){
-                console.log(`Data has been sent`);
-            }else {
+            if(!await api.clearGuildWithID({ServerID: guild.id})){
                 console.log(`An error has current`)
             }
         })

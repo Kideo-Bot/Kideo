@@ -6,8 +6,6 @@ const MessageEmbed = require("discord.js").MessageEmbed;
 
 const {returnGenreWithNumber} = require("./NetflixRandomAPI");
 
-const config = require("../config.json");
-
 /**
  * @param data
  * @param path {string};

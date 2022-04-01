@@ -119,12 +119,21 @@ class Kideo extends Client {
             this.prefix = guild.message[0].PREFIX;
 
             if(message.content === `<@!${this.user.id}>` || message.content === `<@${this.user.id}>`){
-                return await message.reply({embeds: [new MessageEmbed().setTitle("**Prefix**").setDescription(`Hi !\n\nMy prefix is **${this.prefix}**`).setThumbnail("https://images.assetsdelivery.com/compings_v2/djvstock/djvstock1409/djvstock140901230.jpg")]});
+                return await message.reply({embeds: [new MessageEmbed().setTitle("**Prefix**").setDescription(`Hi!\n\nMy prefix is **${this.prefix}**`).setThumbnail("https://images.assetsdelivery.com/compings_v2/djvstock/djvstock1409/djvstock140901230.jpg")]});
             }
 
             if(!await api.addPointXpGuild(message.guildId)){
                 console.log("Error on Xp Point");
                 return;
+            }
+
+            const level = await api.getLevel(message.guildId);
+            const exp = await api.getExperience(message.guildId);
+
+            if (level !== undefined || exp !== undefined) {
+                if(exp === 120 * level) {
+                    await message.reply({embeds: [new MessageEmbed().setTitle("**The server level increased :smirk:**").setDescription(`The server level is now **level ${level + 1}** :sunglasses:\nYou should thank <@${message.author.id}> :partying_face:`)]})
+                }
             }
 
             if(!message.content.startsWith(this.prefix)) return;

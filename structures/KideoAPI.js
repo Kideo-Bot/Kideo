@@ -412,6 +412,24 @@ class KideoAPI {
 
     }
 
+    /**
+     *
+     * @param ServerID {string}
+     * @returns {Promise<number>}
+     */
+    async getLevel(ServerID) {
+        return await (await getData({ServerID: ServerID}, "/api/getLevel", "POST")).message;
+    }
+
+    /**
+     *
+     * @param ServerID {string}
+     * @returns {Promise<number>}
+     */
+    async getExperience(ServerID) {
+        return await (await getData({ServerID: ServerID}, "/api/getExperience", "POST")).message;
+    }
+
 }
 
 module.exports = KideoAPI;

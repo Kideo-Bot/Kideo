@@ -17,8 +17,8 @@ module.exports = new Command(async (message, args, client) => {
 
     const newPrefix = args[1];
 
-    if(newPrefix.length > 1){
-        message.reply({embeds: [new MessageEmbed().setTitle("**Prefix too long**").setDescription("The prefix can't be bigger than 1")]});
+    if(newPrefix.length > 2){
+        message.reply({embeds: [new MessageEmbed().setTitle("**Prefix too long**").setDescription("The prefix can't be **bigger than 2**")]});
         return;
     }
 

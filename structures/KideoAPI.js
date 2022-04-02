@@ -18,7 +18,7 @@ async function sendData(data, path, method){
 
         const response = new Promise((resolve, reject) => {
 
-            const request = http.request({host: "0.0.0.0", port: 5000, path: path, headers: {"Content-Type": "application/json"}, method: method}, res => {
+            const request = http.request({host: config.ApiIP, port: 5000, path: path, headers: {"Content-Type": "application/json"}, method: method}, res => {
 
                 let body = "";
 
@@ -64,7 +64,7 @@ async function getData(body, path, method){
 
         const response = new Promise((resolve, reject) => {
 
-            const request = http.request({host: "0.0.0.0", port: 5000, path: path, headers: {"Content-Type": "application/json"}, method: method}, res => {
+            const request = http.request({host: config.ApiIP, port: 5000, path: path, headers: {"Content-Type": "application/json"}, method: method}, res => {
 
                 let body = "";
 

@@ -2,8 +2,6 @@ const Command = require("../structures/Command");
 
 const { Message, MessageEmbed } = require("discord.js");
 
-const KideoAPI = require("../structures/KideoAPI.js");
-
 module.exports = new Command(async (message, args, client) => {
 
     const level = await client.KideoApi.getLevel(message.guildId);
@@ -12,7 +10,7 @@ module.exports = new Command(async (message, args, client) => {
     await message.reply(
         {
             embeds: [
-            new MessageEmbed().setTitle("**Server Statistics**").setDescription(`Level: ${level}\nExperience: ${exp}`).setFooter("Kideo - 2022")
+            new MessageEmbed().setTitle("**Server Statistics**").setDescription(`Level: ${level}\nExperience: ${exp}`).setFooter({text: "Kideo - 2022"})
             ]
         }
     );

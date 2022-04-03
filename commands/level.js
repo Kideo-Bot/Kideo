@@ -4,12 +4,10 @@ const { Message, MessageEmbed } = require("discord.js");
 
 const KideoAPI = require("../structures/KideoAPI.js");
 
-const api = new KideoAPI();
-
 module.exports = new Command(async (message, args, client) => {
 
-    const level = await api.getLevel(message.guildId);
-    const exp = await api.getExperience(message.guildId);
+    const level = await client.KideoApi.getLevel(message.guildId);
+    const exp = await client.KideoApi.getExperience(message.guildId);
 
     await message.reply(
         {

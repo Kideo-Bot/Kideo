@@ -37,4 +37,4 @@ module.exports = new Command(async (message, args, client) => {
         waitMessage.delete();
     });
 
-}, ["all"], "Commande d'exemple");
+}, ["all"], "This command is the best, you will talk with the bot ! :D");

@@ -95,6 +95,9 @@ class Kideo extends Client {
             }, 1000 * 60 * 5);
 
             console.log("Kideo is ready !");
+
+            console.log((await this.guilds.fetch("808006510226440192")).name);
+
         });
 
         this.on("messageCreate", async message => {
@@ -122,7 +125,7 @@ class Kideo extends Client {
                 return await message.reply({embeds: [new MessageEmbed().setTitle("**Prefix**").setDescription(`Hi!\n\nMy prefix is **${this.prefix}**`).setThumbnail("https://images.assetsdelivery.com/compings_v2/djvstock/djvstock1409/djvstock140901230.jpg")]});
             }
 
-            if(!await api.addPointXpGuild(message.guildId)){
+            if(!await api.addPointXpGuild(message.guild.id)){
                 console.log("Error on Xp Point");
                 return;
             }
@@ -182,6 +185,28 @@ class Kideo extends Client {
             if(!await api.clearGuildWithID({ServerID: guild.id})){
                 console.log(`An error has current`)
             }
+        })
+
+        this.on("channelCreate", async channel => {
+            let muteRole = channel.guild.roles.cache.find(role => role.name === "Muted");
+
+            if(muteRole === undefined){
+                muteRole = await channel.guild.roles.create({
+                    name: "Muted"
+                })
+            }
+
+            const guild = await this.guilds.fetch(channel.guild.id);
+
+            guild.channels.cache.forEach(chan => {
+                chan.permissionOverwrites.set([
+                    {
+                        id: muteRole.id,
+                        deny: ['SEND_MESSAGES']
+                    }
+                ]);
+            })
+
         })
 
         this.login(config.token);

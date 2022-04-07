@@ -10,9 +10,9 @@ module.exports = new Command(async (message, args, client) => {
     await message.reply(
         {
             embeds: [
-            new MessageEmbed().setTitle("**Server Statistics**").setDescription(`Level: ${level}\nExperience: ${exp}`).setFooter({text: "Kideo - 2022"})
+                new MessageEmbed().setTitle("**Server Statistics**").setDescription(`Level: **${level}**\nExperience: **${exp}**`).setFooter({text: "Kideo - 2022"}).setColor(client.color.TENNISBALL)
             ]
         }
     );
 
-}, ["all"], "Commande d'exemple");
+}, ["all"], "This command will give you the level of the server !");

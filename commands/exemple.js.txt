@@ -4,4 +4,4 @@ const { Message, MessageEmbed } = require("discord.js");
 
 module.exports = new Command((message, args, client) => {
 
-}, [""], "Commande d'exemple");
+}, ["all"], "Commande d'exemple");

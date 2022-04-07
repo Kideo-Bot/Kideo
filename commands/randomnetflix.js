@@ -6,4 +6,4 @@ module.exports = new Command(async (message, args, client) => {
 
     message.reply({embeds: [await client.KideoApi.getNetflixSeriesOrFilmAPI()]});
 
-}, ["all"], "Commande d'exemple");
+}, ["all"], "You will have a random Netflix series or movie");

@@ -120,7 +120,7 @@ class Kideo extends Client {
             this.prefix = guild.message[0].PREFIX;
 
             if(message.content === `<@!${this.user.id}>` || message.content === `<@${this.user.id}>`){
-                return await message.reply({embeds: [new MessageEmbed().setTitle("**Prefix**").setDescription(`Hi!\n\nMy prefix is **${this.prefix}**`).setThumbnail("https://images.assetsdelivery.com/compings_v2/djvstock/djvstock1409/djvstock140901230.jpg")]});
+                return await message.reply({embeds: [new MessageEmbed().setTitle("**Prefix**").setDescription(`Hi!\n\nMy prefix is **${this.prefix}**`).setThumbnail("https://images.assetsdelivery.com/compings_v2/djvstock/djvstock1409/djvstock140901230.jpg").setFooter({text: "Kideo - 2022"})]});
             }
 
             if(!await api.addPointXpGuild(message.guild.id)){
@@ -133,7 +133,7 @@ class Kideo extends Client {
 
             if (level !== undefined || exp !== undefined) {
                 if(exp === 120 * level) {
-                    await message.reply({embeds: [new MessageEmbed().setTitle("**The server level increased :smirk:**").setDescription(`The server is now **level ${level + 1}** :sunglasses:\nYou should thank <@${message.author.id}> :partying_face:`)]})
+                    await message.reply({embeds: [new MessageEmbed().setTitle("**The server level increased :smirk:**").setDescription(`The server is now **level ${level + 1}** :sunglasses:\nYou should thank <@${message.author.id}> :partying_face:`).setFooter({text: "Kideo - 2022"})]})
                 }
             }
 
@@ -144,7 +144,7 @@ class Kideo extends Client {
             const command = this.command.get(args[0]);
 
             if(!command){
-                embed = new MessageEmbed().setTitle("**Wrong command**").setDescription(`The command **${this.prefix}${args[0]}** doesn't exist !`).setColor(Color.RED);
+                embed = new MessageEmbed().setTitle("**Wrong command**").setDescription(`The command **${this.prefix}${args[0]}** doesn't exist !`).setColor(Color.RED).setFooter({text: "Kideo - 2022"});
                 await message.reply({embeds: [embed]});
                 return;
             }
@@ -165,7 +165,7 @@ class Kideo extends Client {
             })
 
             if(!canStart){
-                await message.reply({embeds: [new MessageEmbed().setTitle("**Missing permissions**").setDescription("You don't have the permissions !").setColor(this.color.RED)]});
+                await message.reply({embeds: [new MessageEmbed().setTitle("**Missing permissions**").setDescription("You don't have the permissions !").setColor(this.color.RED).setFooter({text: "Kideo - 2022"})]});
                 return;
             }
 

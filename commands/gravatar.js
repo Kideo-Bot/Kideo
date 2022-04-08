@@ -8,6 +8,6 @@ module.exports = new Command((message, args, client) => {
 
     const hex = MD5(args[1].toLowerCase());
 
-    message.reply({embeds: [new MessageEmbed().setTitle("**Gravatar**").setImage("https://www.gravatar.com/avatar/" + hex)]});
+    message.reply({embeds: [new MessageEmbed().setTitle("**Gravatar**").setImage("https://www.gravatar.com/avatar/" + hex).setFooter({text: "Kideo - 2022"})]});
 
 }, ["all"], "This command will give you your Gravatar");

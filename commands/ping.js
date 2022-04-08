@@ -10,11 +10,11 @@ module.exports = new Command((message, args, client) => {
         number++;
     }, 1);
 
-    let embed = new MessageEmbed().setTitle("**Pong**").setDescription("Pong!").setColor(client.color.TENNISBALL);
+    let embed = new MessageEmbed().setTitle("**Pong**").setDescription("Pong!").setColor(client.color.TENNISBALL).setFooter({text: "Kideo - 2022"});
 
     message.reply({embeds: [embed]}).then(message => {
         clearInterval(interval);
-        embed = new MessageEmbed().setTitle("**Pong**").setDescription(`Pong! Your ping is **${number}ms!**`).setColor(client.color.TENNISBALL);
+        embed = new MessageEmbed().setTitle("**Pong**").setDescription(`Pong! Your ping is **${number}ms!**`).setColor(client.color.TENNISBALL).setFooter({text: "Kideo - 2022"});
         message.edit({embeds: [embed]});
     });
 

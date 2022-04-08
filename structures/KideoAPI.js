@@ -389,9 +389,9 @@ class KideoAPI {
                         }
 
                         if(seriesOrFilm.name !== undefined && seriesOrFilm.overview !== undefined && seriesOrFilm.classification !== undefined && seriesOrFilm.rating !== null && seriesOrFilm.id !== undefined && seriesOrFilm.genres !== undefined){
-                            resolve(new MessageEmbed().setTitle("**Netflix Roulette**").setDescription("**__" + seriesOrFilm.name + "__**\nGenres: **" + seriesOrFilm.genres + "**\nClassification: **" + seriesOrFilm.classification + "**\nRating: **" + seriesOrFilm.rating.toString() + "/10**\nOverview: **" + seriesOrFilm.overview + "**").setImage(seriesOrFilm.poster).setColor("GREEN"))
+                            resolve(new MessageEmbed().setTitle("**Netflix Roulette**").setDescription("**__" + seriesOrFilm.name + "__**\nGenres: **" + seriesOrFilm.genres + "**\nClassification: **" + seriesOrFilm.classification + "**\nRating: **" + seriesOrFilm.rating.toString() + "/10**\nOverview: **" + seriesOrFilm.overview + "**").setImage(seriesOrFilm.poster).setColor("GREEN").setFooter({text: "Kideo - 2022"}))
                         }else {
-                            resolve(new MessageEmbed().setTitle("**Netflix Roulette**").setDescription("We don't have enought arguments with the API"));
+                            resolve(new MessageEmbed().setTitle("**Netflix Roulette**").setDescription("We don't have enought arguments with the API").setFooter({text: "Kideo - 2022"}));
                         }
 
 

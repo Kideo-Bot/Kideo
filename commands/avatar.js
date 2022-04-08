@@ -7,7 +7,7 @@ module.exports = new Command(async (message, args, client) => {
     if(message.mentions.members.size >= 1){
         const iconURL = message.mentions.members.first().displayAvatarURL({format: "png"});
 
-        const embed = new MessageEmbed().setImage(iconURL + "?size=2048").setColor(client.color.TENNISBALL).setAuthor({iconURL: message.author.displayAvatarURL({format: "png"}), name: message.author.tag}).setTitle("**Avatar**");
+        const embed = new MessageEmbed().setImage(iconURL + "?size=2048").setColor(client.color.TENNISBALL).setAuthor({iconURL: message.author.displayAvatarURL({format: "png"}), name: message.author.tag}).setTitle("**Avatar**").setFooter({text: "Kideo - 2022"});
 
         message.reply({embeds: [embed]});
         return;
@@ -15,7 +15,7 @@ module.exports = new Command(async (message, args, client) => {
 
     const iconURL = message.author.displayAvatarURL({format: "png"});
 
-    const embed = new MessageEmbed().setImage(iconURL + "?size=2048").setColor(client.color.TENNISBALL).setAuthor({iconURL: iconURL, name: message.author.tag}).setTitle("**Avatar**");
+    const embed = new MessageEmbed().setImage(iconURL + "?size=2048").setColor(client.color.TENNISBALL).setAuthor({iconURL: iconURL, name: message.author.tag}).setTitle("**Avatar**").setFooter({text: "Kideo - 2022"});
 
     message.reply({embeds: [embed]});
 

@@ -196,7 +196,7 @@ class Kideo extends Client {
 
                 const guild = await this.guilds.fetch(channel.guild.id);
 
-                guild.channels.cache.forEach(chan => {
+                guild.channels.cache.forEach( chan => {
                     chan.permissionOverwrites.set([
                         {
                             id: muteRole.id,
@@ -206,7 +206,7 @@ class Kideo extends Client {
                 })
             }
 
-            channel.permissionOverwrites.set([
+            await channel.permissionOverwrites.set([
                 {
                     id: muteRole.id,
                     deny: ['SEND_MESSAGES']

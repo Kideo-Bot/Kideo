@@ -40,4 +40,4 @@ module.exports = new Command(async (message, args, client) => {
         })
     })
 
-}, ["all"], "This command will mute the person you want");
+}, ["all"], "This command will kick the person you want with a reason");

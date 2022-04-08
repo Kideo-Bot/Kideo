@@ -27,8 +27,25 @@ module.exports = new Command(async (message, args, client) => {
         return;
     }
 
-    message.channel.bulkDelete(number).then(() => {
-        message.channel.send({embeds: [new MessageEmbed().setTitle("**Command succeed**").setDescription(`I removed **${number} messages**`).setColor(client.color.TENNISBALL).setFooter({text: "Kideo - 2022"})]})
+    message.channel.bulkDelete(number + 1).then(async () => {
+        const mes = await message.channel.send({embeds: [new MessageEmbed().setTitle("**Command succeed**").setDescription(`I removed **${number} messages**`).setColor(client.color.TENNISBALL).setFooter({text: "Kideo - 2022"})]})
+
+        const messageID = mes.id;
+        const channelID = mes.channel.id;
+        const guildID = mes.guild.id;
+
+        setTimeout(async () => {
+
+            const guild = await client.guilds.fetch(guildID).catch(() => {});
+            const channel = await guild.channels.fetch(channelID).catch(() => {});
+            const deleteMessage = await channel.messages.fetch(messageID).catch(() => {});
+
+            if(deleteMessage !== undefined){
+                deleteMessage.delete();
+            }
+
+        }, 1000 * 5)
+
     }).catch(err => {
         message.channel.send({embeds: [new MessageEmbed().setTitle("**Command failed**").setDescription("There is an error when you have deleted messages :/").setFooter({text: "Kideo - 2022"})]});
     })

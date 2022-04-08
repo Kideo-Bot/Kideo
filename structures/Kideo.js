@@ -96,8 +96,6 @@ class Kideo extends Client {
 
             console.log("Kideo is ready !");
 
-            console.log((await this.guilds.fetch("808006510226440192")).name);
-
         });
 
         this.on("messageCreate", async message => {
@@ -191,21 +189,30 @@ class Kideo extends Client {
             let muteRole = channel.guild.roles.cache.find(role => role.name === "Muted");
 
             if(muteRole === undefined){
+
                 muteRole = await channel.guild.roles.create({
                     name: "Muted"
                 })
+
+                const guild = await this.guilds.fetch(channel.guild.id);
+
+                guild.channels.cache.forEach(chan => {
+                    chan.permissionOverwrites.set([
+                        {
+                            id: muteRole.id,
+                            deny: ['SEND_MESSAGES']
+                        }
+                    ]);
+                })
             }
 
-            const guild = await this.guilds.fetch(channel.guild.id);
+            channel.permissionOverwrites.set([
+                {
+                    id: muteRole.id,
+                    deny: ['SEND_MESSAGES']
+                }
+            ])
 
-            guild.channels.cache.forEach(chan => {
-                chan.permissionOverwrites.set([
-                    {
-                        id: muteRole.id,
-                        deny: ['SEND_MESSAGES']
-                    }
-                ]);
-            })
 
         })
 

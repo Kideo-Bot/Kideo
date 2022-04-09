@@ -29,7 +29,7 @@ function setActivities(client, activity){
  */
 class Kideo extends Client {
     constructor() {
-        const ints = new Intents().add(["GUILDS", "GUILD_MESSAGES", "GUILD_MEMBERS", "GUILD_MESSAGE_REACTIONS"]);
+        const ints = new Intents().add(["GUILDS", "GUILD_MESSAGES", "GUILD_MEMBERS", "GUILD_MESSAGE_REACTIONS", "DIRECT_MESSAGES"]);
         super({
             intents: ints,
             partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'GUILD_MEMBER', 'USER']
@@ -99,6 +99,8 @@ class Kideo extends Client {
         });
 
         this.on("messageCreate", async message => {
+
+            if(message.channel.type === "DM") return;
 
             if(message.author.bot) return;
 
@@ -212,8 +214,12 @@ class Kideo extends Client {
                     deny: ['SEND_MESSAGES']
                 }
             ])
+        })
 
-
+        this.on("messageCreate", async message => {
+            if (message.channel.type === "DM" && message.content === "Hey"){
+                await message.reply("Bonjour jeune entrepreneur")
+            }
         })
 
         this.login(config.token);

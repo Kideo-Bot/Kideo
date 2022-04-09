@@ -69,4 +69,4 @@ module.exports = new Command(async (message, args, client) => {
         })
     }
 
-}, ["all"], "Commande d'exemple");
+}, ["all"], "I warn you! This command warns people.");

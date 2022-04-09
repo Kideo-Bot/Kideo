@@ -10,4 +10,4 @@ module.exports = new Command((message, args, client) => {
 
     message.reply({embeds: [new MessageEmbed().setTitle("**Gravatar**").setImage("https://www.gravatar.com/avatar/" + hex).setFooter({text: "Kideo - 2022"})]});
 
-}, ["all"], "This command will give you your Gravatar");
+}, ["all"], "It sends you the **gravatar avatar** from the given address email ;)");

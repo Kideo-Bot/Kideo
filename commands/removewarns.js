@@ -26,4 +26,4 @@ module.exports = new Command(async (message, args, client) => {
         }
     }
 
-}, ["all"], "Commande d'exemple");
+}, ["all"], "Relax, it just removes warns from people");

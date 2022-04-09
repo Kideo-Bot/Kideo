@@ -73,7 +73,7 @@ class Kideo extends Client {
 
             this.command.set(name, command);
 
-            console.log(`La commande ${name} a bien été chargé !`);
+            console.log(`La commande ${name} a bien été chargée !`);
         })
 
         this.on("ready", async () => {

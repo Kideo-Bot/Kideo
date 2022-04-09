@@ -22,4 +22,4 @@ module.exports = new Command(async (message, args, client) => {
 
     message.reply({embeds: [new MessageEmbed().setTitle("**" + target.user.username.toUpperCase() + "**").setDescription(`Username: **${target.user.username}**\nImageURL: ${imageURL}\nNumber of warns: **${warns}**`).setFooter({iconURL: imageURL, text: "Kideo - 2022"}).setColor(client.color.TENNISBALL)]});
 
-}, ["all"], "Commande d'exemple");
+}, ["all"], "It just tells you some informations about a user. Nothing else...");

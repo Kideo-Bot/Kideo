@@ -430,6 +430,22 @@ class KideoAPI {
         return await (await getData({ServerID: ServerID}, "/api/getExperience", "POST")).message;
     }
 
+    async getWarnsUser(UserID, GuildID){
+        return await getData({"USERID": UserID, "GUILDID": GuildID}, "/api/getUserWarns", "POST");
+    }
+
+    async setWarnsUser(UserID, warns, GuildID){
+        return await sendData({"USERID": UserID, "WARNSNUMBER": warns, "GUILDID": GuildID}, "/api/modifyUserWarns", "POST");
+    }
+
+    async createWarnUser(UserID, GuildID){
+        return !! await sendData({"USERID": UserID, "GUILDID": GuildID}, "/api/setUserWarns", "POST");
+    }
+
+    async deleteWarnUser(UserID, GuildID){
+        return !! await sendData({"USERID": UserID, "GUILDID": GuildID}, "/api/deleteUserWarns", "POST");
+    }
+
 }
 
 module.exports = KideoAPI;

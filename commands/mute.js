@@ -29,7 +29,11 @@ module.exports = new Command(async (message, args, client) => {
     let i = 2;
 
     for (i;i<args.length;i++){
-        reason+=args[i] + " ";
+        if(i === args.length - 1){
+            reason+=args[i];
+        }else {
+            reason+=args[i] + " ";
+        }
     }
 
     let muteRole = member.guild.roles.cache.find(role => role.name === "Muted");

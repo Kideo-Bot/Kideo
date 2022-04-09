@@ -29,7 +29,11 @@ module.exports = new Command(async (message, args, client) => {
     let i = 2;
 
     for (i;i<args.length;i++){
-        reason+=args[i] + " ";
+        if(i === args.length - 1){
+            reason+=args[i];
+        }else {
+            reason+=args[i] + " ";
+        }
     }
 
     target.send({embeds: [new MessageEmbed().setTitle("**You're banned**").setDescription("You are banned from the server **" + message.guild.name + "** for the reason: **" + reason + "**").setColor(client.color.RED).setFooter({text: "Kideo - 2022"})]}).then(() => {

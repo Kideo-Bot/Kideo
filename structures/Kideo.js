@@ -217,9 +217,28 @@ class Kideo extends Client {
         })
 
         this.on("messageCreate", async message => {
-            if (message.channel.type === "DM" && message.content === "Hey"){
-                await message.reply("Bonjour jeune entrepreneur")
+
+            if(message.author.bot) return;
+
+            if(message.channel.type !== "DM") return;
+
+            if (message.content === "Hey"){
+                return await message.reply("Bonjour jeune entrepreneur")
             }
+
+            const response = await this.KideoApi.talkWithOpenAI(message.content);
+
+            if(response.length > 2000){
+                message.reply("The bot is speaking too much...");
+                return;
+            }
+
+            if(response === undefined || response === ""){
+                return;
+            }
+
+            message.channel.send(response);
+
         })
 
         this.login(config.token);

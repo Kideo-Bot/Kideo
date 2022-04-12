@@ -446,6 +446,26 @@ class KideoAPI {
         return !! await sendData({"USERID": UserID, "GUILDID": GuildID}, "/api/deleteUserWarns", "POST");
     }
 
+    async getUserTempMute(UserID, GuildID){
+        return await getData({"USERID": UserID, "GUILDID": GuildID}, "/api/getUserTempMute", "POST");
+    }
+
+    async setUserTempMute(UserID, Time, GuildID){
+        return await sendData({"USERID": UserID, "TIME": Time, "GUILDID": GuildID}, "/api/modifyUserTempMute", "POST");
+    }
+
+    async createUserTempMute(UserID, GuildID, Time){
+        return !! await sendData({"USERID": UserID, "GUILDID": GuildID, "TIME": Time}, "/api/setUserTempMute", "POST");
+    }
+
+    async deleteUserTempMute(UserID, GuildID){
+        return !! await sendData({"USERID": UserID, "GUILDID": GuildID}, "/api/deleteUserTempMute", "POST");
+    }
+
+    async getUsersTempMute(){
+        return await getData(null, "/api/getUsersTempMute", "GET");
+    }
+
 }
 
 module.exports = KideoAPI;

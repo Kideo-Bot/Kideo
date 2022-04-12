@@ -94,6 +94,47 @@ class Kideo extends Client {
 
             }, 1000 * 60 * 5);
 
+            setInterval(async () => {
+
+                const users = await api.getUsersTempMute();
+
+                const date = new Date();
+
+                if(users.succeed !== false){
+
+                    for (const membertempmute of users.message) {
+                        if(membertempmute.TIME <= date.getTime()){
+                            const guild = await this.guilds.fetch(membertempmute.GUILDID);
+                            const member = await guild.members.fetch(membertempmute.USERID);
+
+                            let muteRole = member.guild.roles.cache.find(role => role.name === "Muted");
+
+                            if(muteRole === undefined){
+                                muteRole = await member.guild.roles.create({
+                                    name: "Muted"
+                                })
+
+                                message.guild.channels.cache.forEach(channel => {
+                                    channel.permissionOverwrites.set([
+                                        {
+                                            id: muteRole.id,
+                                            deny: ['SEND_MESSAGES']
+                                        }
+                                    ]);
+                                })
+                            }
+
+                            if(await api.deleteUserTempMute(member.id, guild.id)){
+                                member.roles.remove(muteRole.id).then(() => {
+                                    member.send({embeds: [new MessageEmbed().setTitle("**You are unmuted**").setDescription("You are unmuted in the server: **" + guild.name + "**").setColor(Color.TENNISBALL).setFooter({text: "Kideo - 2022"})]})
+                                });
+                            }
+                        }
+                    }
+                }
+
+            }, 1000)
+
             console.log("Kideo is ready !");
 
         });

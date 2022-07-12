@@ -7,10 +7,10 @@ module.exports = new Command((message, args, client) => {
     let embedMessage = "";
 
     client.command.forEach(command => {
-        embedMessage += `**${command.name}**: ${command.description}\n\n`;
+        embedMessage += `**${client.prefix}${command.name}**: ${command.description}\n\n`;
     });
 
-    const embed = new MessageEmbed().setTitle("**Help**").setDescription(embedMessage);
+    const embed = new MessageEmbed().setTitle("**Help**").setDescription(embedMessage).setColor(client.color.TRANSPARENT).setFooter({text: "Kideo - 2022", iconURL: client.user.displayAvatarURL({format: "png"})});
 
     message.reply({embeds: [embed]});
 

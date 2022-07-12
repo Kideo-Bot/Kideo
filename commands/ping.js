@@ -4,6 +4,18 @@ const { Message, MessageEmbed } = require("discord.js");
 
 module.exports = new Command((message, args, client) => {
 
-    message.reply("Pong !");
+    let number = 0;
 
-}, ["910499512085278760"], "Cette commande permet de savoir si le bot fonctionne correctement");
+    const interval = setInterval(() => {
+        number++;
+    }, 1);
+
+    let embed = new MessageEmbed().setTitle("**Pong**").setDescription("Pong!").setColor(client.color.TENNISBALL).setFooter({text: "Kideo - 2022"});
+
+    message.reply({embeds: [embed]}).then(message => {
+        clearInterval(interval);
+        embed = new MessageEmbed().setTitle("**Pong**").setDescription(`Pong! Your ping is **${number}ms!**`).setColor(client.color.TENNISBALL).setFooter({text: "Kideo - 2022"});
+        message.edit({embeds: [embed]});
+    });
+
+}, ["all"], "This command allows you knowing if the bot is online");
